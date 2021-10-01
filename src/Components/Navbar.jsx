@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 export class Navbar extends Component {
   static propTypes = {};
@@ -7,11 +8,11 @@ export class Navbar extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-primary " style={{height: "10vh"}}>
           <div className="container-fluid">
-            <a className="navbar-brand" href="/">
+            <Link className="navbar-brand" to="/">
               NewsMonkey
-            </a>
+            </Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -34,9 +35,47 @@ export class Navbar extends Component {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/about">
-                    About
-                  </a>
+                  <Link className="nav-link" aria-current="page" to="/business">
+                    Business
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    className="nav-link"
+                    aria-current="page"
+                    to="/entertainment"
+                  >
+                    Entertainment
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" aria-current="page" to="/">
+                    General
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" aria-current="page" to="/health">
+                    Health
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" aria-current="page" to="/science">
+                    Science
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" aria-current="page" to="/sports">
+                    Sports
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    className="nav-link"
+                    aria-current="page"
+                    to="/technology"
+                  >
+                    Technology
+                  </Link>
                 </li>
               </ul>
             </div>
