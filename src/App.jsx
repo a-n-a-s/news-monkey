@@ -6,6 +6,7 @@ import LoadingBar from "react-top-loading-bar";
 
 export default class App extends Component {
   pageSize = 10;
+  apiKey = process.env.REACT_APP_NEWS_API_KEY;
 
   state = {
     progress: 0,
