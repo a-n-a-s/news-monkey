@@ -16,8 +16,8 @@ export class News extends Component {
     category: PropTypes.string,
   };
 
-  capitalize = (str) => {
-    return str.charAt(0).toUpperCase();
+  capitalize = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
   constructor(props) {
@@ -31,14 +31,18 @@ export class News extends Component {
     document.title = `NewsMonkey - ${this.capitalize(this.props.category)}`;
   }
 
-  async updateNews() {
+  updateNews = async () => {
+    this.props.setProgress(0);
     const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=1dd6ff2496fc4cc18fc20e263c5aa085&${this.state.page}=1&pageSize=${this.props.pageSize}`;
+    this.props.setProgress(30);
     let data = await fetch(url).then((res) => res.json());
+    this.props.setProgress(70);
     this.setState({
       articles: data.articles,
       totalResults: data.totalResults,
     });
-  }
+    this.props.setProgress(100);
+  };
 
   async componentDidMount() {
     this.updateNews();
@@ -47,7 +51,7 @@ export class News extends Component {
   fetchMoreData = async () => {
     this.setState({ page: this.state.page + 1 });
 
-    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=1dd6ff2496fc4cc18fc20e263c5aa085&${this.state.page}=1&pageSize=${this.props.pageSize}`;
+    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=1dd6ff2496fc4cc18fc20e263c5aa085&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     let data = await fetch(url).then((res) => res.json());
     this.setState({
       articles: data.articles.concat(data.articles),
@@ -63,9 +67,11 @@ export class News extends Component {
         </h1>
         {this.state.loading && <Spinner />}
         <InfiniteScroll
-          dataLength={this.state.articles.length}
-          next={this.fetchMoreData}
-          hasMore={this.state.articles.length !== this.state.totalResults}
+          dataLength={
+            this.state.articles ? this.state.articles.length : 0
+          }
+          next={this?.fetchMoreData}
+          hasMore={this?.state?.articles?.length !== this?.state?.totalResults}
           loader={<Spinner />}
         >
           <div className="container">
